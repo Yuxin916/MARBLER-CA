@@ -80,14 +80,6 @@ class HeterogeneousSensorNetwork(BaseEnv):
         if self.args.seed != -1:
             np.random.seed(self.args.seed)
 
-        # if(args.hard_coded_coalition):  # KEEP FALSE
-        #     self.args.resample = False
-        #     with open(f'{module_dir}/grid_search_coalitions.yaml', 'r') as stream:
-        #         self.predefined_coalition = yaml.safe_load(stream)
-        #     raise NotImplementedError("Hard coded coalition not implemented yet")
-        #
-        # else:
-
         # 从预生成的coalition中加载，文件里包含所有robot的id和radius
         with open(f'{module_dir}/{args.coalition_file}', 'r') as stream:
             self.predefined_coalition = yaml.safe_load(stream)
