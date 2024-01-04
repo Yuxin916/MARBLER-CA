@@ -145,7 +145,7 @@ def run_env(config, module_dir, gif_dir=None, eval_dir=None, eval_file_name="def
                 
                 # log data
                 episodeViolations += 1.0 if info["violation_occurred"] else 0.0
-                episodeConnectivity.append(info["connectivity"])
+                # episodeConnectivity.append(info["connectivity"])
 
                 if model_config.shared_reward:
                     episodeReturn += reward[0]

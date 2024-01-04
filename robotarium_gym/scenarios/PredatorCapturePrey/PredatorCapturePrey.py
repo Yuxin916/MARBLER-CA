@@ -167,7 +167,8 @@ class PredatorCapturePrey(BaseEnv):
                 terminated = True              
 
         if terminated:
-            print(f"Remaining prey: {updated_state['num_prey']} {return_message}")   
+            # print(f"Remaining prey: {updated_state['num_prey']} {return_message}")
+            pass
         
         return obs, [rewards]*self.num_robots, [terminated]*self.num_robots, {} 
 

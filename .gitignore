@@ -7,3 +7,6 @@ results/
 **/.ipynb_checkpoints/
 robotarium_gym.egg-info/
 eval_saves/
+robotarium_python_simulator/
+robotarium_gym/scenarios/HeterogeneousSensorNetwork/test_generate_coalitions.yaml
+robotarium_gym/scenarios/HeterogeneousSensorNetwork/test_predefined_agents.yaml

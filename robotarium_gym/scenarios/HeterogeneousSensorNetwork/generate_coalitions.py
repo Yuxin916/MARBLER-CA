@@ -16,6 +16,7 @@ def generate_coalitions_from_agents(agents_, config):
     # TRAINING COALITIONS
     coalitions["train"] = {"coalitions":{}}
     coalitions["test"] = {"coalitions":{}}
+    # 分别生成N个agents的coalitions (也可以只选2/3/4）
     num_robots_list = [2, 3, 4, 5, 6] # We are unlikely to use coalitions larger than 6
     num_coalitions = config["n_coalitions"]
     for t in ["train", "test"]:
@@ -44,21 +45,24 @@ def generate_coalitions_from_agents(agents_, config):
                 for i, idx in enumerate(agent_idxs):
                     coalitions[t]["coalitions"][num_agents_str][k][int(i)] = deepcopy(agents[idx])
     return coalitions
+    # 分别生成训练和测试的集合，每个集合包含不同数量N的agents (2,3,4,5,6)，每个集合包含n个coalitions，每个coalition包含N个agents的id和radius
 
             
 def main():
+    # 读取环境配置文件
     with open('config.yaml', 'r') as stream:
         config = yaml.safe_load(stream)
-
+    # 生成训练的agents和测试的agents
     agents={}
     agents['train'] = {}
     agents['test'] = {}
     num_candidates = config['n_train_agents'] + config['n_test_agents']
     idx_size = int(np.ceil(np.log2(num_candidates)))
-
+    # radius的分布 - U(0.2, 0.6)
     func_args = copy.deepcopy(config['traits']['radius'])
     del func_args['distribution']   
 
+    # 生成训练和测试agents的id和radius #TODO：为什么训练和测试的分布保持一致？
     candidate = 0
     for i in range(config['n_train_agents']):
         agents['train'][i] = {}
@@ -74,14 +78,18 @@ def main():
         agents['test'][i]['radius'] = float(val)
         candidate += 1
 
+    # 分别生成训练和测试的集合，每个集合包含不同数量N的agents (2,3,4,5,6)，每个集合包含n个coalitions，每个coalition包含N个agents的id和radius
     coalitions = generate_coalitions_from_agents(agents, config)
+
     out = input("Would you like to save these as the new predefined coalitions?[y/N]\n")
     if(out == "y"):
         with open(config['coalition_file'], 'w') as outfile:
+            print("Saving coalitions to %s" % outfile)
             yaml.dump(coalitions, outfile, default_flow_style=False, allow_unicode=True)
 
-        with open(config['coalition_file'].split(".y")[0] + '_agents.yaml', 'w') as outfile:
-            yaml.dump(agents, outfile, default_flow_style=False, allow_unicode=True)
+        # with open(config['coalition_file'].split(".y")[0] + '_agents.yaml', 'w') as outfile:
+        #     print("Saving agents to %s" % outfile)
+        #     yaml.dump(agents, outfile, default_flow_style=False, allow_unicode=True)
 
     else:
         print("Coalitions not saved.")
