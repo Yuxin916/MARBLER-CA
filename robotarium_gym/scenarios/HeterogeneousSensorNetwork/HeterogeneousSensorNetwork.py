@@ -322,6 +322,7 @@ class HeterogeneousSensorNetwork(BaseEnv):
             "violation_occurred": violation_occurred,  # not a true count, just binary for if ANY violation occurred
         }
         # 添加info
+        # 此时的info包含violation_occurred，edge_count，total_overlap， edge_set
         info.update(rew_metric_info)
 
         return obs, [rewards] * self.num_robots, [terminated] * self.num_robots, info
@@ -419,7 +420,8 @@ class HeterogeneousSensorNetwork(BaseEnv):
                     # 每个agent距离中心的reward
         reward += -1 * min(center_reward) * self.args.dist_reward_multiplier
 
-        info = {'edge_count': edge_count, 'total_overlap': total_overlap, "edge_set": edge_set}
+        # info = {'edge_count': edge_count, 'total_overlap': total_overlap, "edge_set": edge_set}
+        info = {'edge_count': edge_count, 'total_overlap': total_overlap}
 
         return reward, info
 
