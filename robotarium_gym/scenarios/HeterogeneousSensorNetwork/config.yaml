@@ -63,9 +63,9 @@ max_episode_steps: 80
 delta: -1
 #If the following two are False, make sure resample is also False
 # 是否已知自己的capability #TODO 修改1
-capability_aware: False
+capability_aware: True
 # 是否已知自己的id #TODO 修改2
-agent_id: True
+agent_id: False
 
 ### reset相关的参数
 # 是否在每次reset的时候resample agent #TODO 修改5 当修改1和2都是false的时候，这个也是false
